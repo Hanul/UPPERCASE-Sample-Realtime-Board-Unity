@@ -71,13 +71,19 @@ namespace Uniconn
             }
         }
 
-        public void Connect(Connector.ConnectionFailedHandler connectionFailedHandler, Connector.ConnectedHandler connectedHandler, Connector.DisconnectedHandler disconnectedHandler)
+        public void Connect(string host, int port)
+        {
+            this.host = host;
+            this.port = port;
+
+            Reconnect();
+        }
+
+        public void RegisterHandlers(Connector.ConnectionFailedHandler connectionFailedHandler, Connector.ConnectedHandler connectedHandler, Connector.DisconnectedHandler disconnectedHandler)
         {
             this.connectionFailedHandler = connectionFailedHandler;
             this.connectedHandler = connectedHandler;
             this.disconnectedHandler = disconnectedHandler;
-
-            Reconnect();
         }
         
         public class ReceiveData<T>
@@ -90,11 +96,8 @@ namespace Uniconn
             methodHandler(JsonUtility.FromJson<ReceiveData<T>>(json).data);
         }
 
-        public SocketServerConnector(string host, int port)
+        public SocketServerConnector()
         {
-            this.host = host;
-            this.port = port;
-
             StringBuilder stringBuilder = new StringBuilder();
 
             receiveCallback = (IAsyncResult asyncResult) =>

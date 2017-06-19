@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2015
+# Visual Studio 2017
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UPPERCASE-Sample-Realtime-Board-Unity", "UPPERCASE-Sample-Realtime-Board-Unity.csproj", "{661271B4-6575-653F-19C2-094BDB790928}"
 EndProject
 Global

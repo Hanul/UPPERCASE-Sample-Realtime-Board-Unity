@@ -12,14 +12,18 @@ namespace Uniconn
         private List<object> waitingSendInfos = new List<object>();
         private List<string> enterRoomNames = new List<string>();
 
-        public RoomConnector(string host, int port)
+        public RoomConnector()
         {
-            connector = new SocketServerConnector(host, port);
+            connector = new SocketServerConnector();
         }
 
-        public void Connect(Connector.ConnectionFailedHandler connectionFailedHandler, Connector.ConnectedHandler connectedHandler, Connector.DisconnectedHandler disconnectedHandler)
+        protected Connector.ConnectionFailedHandler connectionFailedHandler;
+
+        public void RegisterHandlers(Connector.ConnectionFailedHandler connectionFailedHandler, Connector.ConnectedHandler connectedHandler, Connector.DisconnectedHandler disconnectedHandler)
         {
-            connector.Connect(connectionFailedHandler, () => {
+            this.connectionFailedHandler = connectionFailedHandler;
+
+            connector.RegisterHandlers(connectionFailedHandler, () => {
 
                 foreach (string roomName in enterRoomNames)
                 {
@@ -36,6 +40,11 @@ namespace Uniconn
                 connectedHandler();
 
             }, disconnectedHandler);
+        }
+
+        public void Connect(string host, int port)
+        {
+            connector.Connect(host, port);
         }
 
         public void Reconnect()

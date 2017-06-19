@@ -5,9 +5,9 @@ public class Board : MonoBehaviour
 {
     void Start()
     {
-        Connector connector = new Connector("127.0.0.1", false, 8530, 8531);
+        Connector connector = new Connector();
 
-        connector.Connect(() =>
+        connector.RegisterHandlers(() =>
         {
             Debug.Log("접속에 실패하였습니다.");
         }, () =>
@@ -17,6 +17,8 @@ public class Board : MonoBehaviour
         {
             Debug.Log("연결이 끊어졌습니다.");
         });
+
+        StartCoroutine(connector.Connect("127.0.0.1", false, 8530, 8531));
     }
     
     public void Write()
