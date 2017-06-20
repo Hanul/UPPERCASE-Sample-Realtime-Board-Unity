@@ -1,5 +1,6 @@
 ﻿using Uniconn;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Board : MonoBehaviour
 {
@@ -19,6 +20,13 @@ public class Board : MonoBehaviour
         });
 
         StartCoroutine(connector.Connect("127.0.0.1", false, 8530, 8531));
+
+        for (int i = 0; i < 10; i += 1)
+        {
+            Transform item = transform.Find("List/Item-" + i);
+            Text text = item.Find("Text").GetComponent<Text>();
+            text.text = "TEST";
+        }
     }
     
     public void Write()
