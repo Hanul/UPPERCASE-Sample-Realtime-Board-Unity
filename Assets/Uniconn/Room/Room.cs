@@ -65,8 +65,7 @@ namespace Uniconn
             }
             else
             {
-                // TODO: 테스트 해봐야함
-                Debug.LogError("ROOM.send에 실패하였습니다. 이미 룸에서 나갔습니다,");
+                Debug.LogError("[" + roomName.Replace('/', '.') + "Room.send] 이미 룸에서 나갔습니다,");
             }
         }
 

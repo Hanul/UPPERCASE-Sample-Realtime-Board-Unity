@@ -100,7 +100,6 @@
     <Compile Include="Assets\Uniconn\Handler\ConnectedHandler.cs" />
     <Compile Include="Assets\Uniconn\Handler\ConnectionFailedHandler.cs" />
     <Compile Include="Assets\Uniconn\Handler\DisconnectedHandler.cs" />
-    <Compile Include="Assets\Uniconn\Model\Model.cs" />
     <Compile Include="Assets\Uniconn\Request.cs" />
     <Compile Include="Assets\Uniconn\Room\Room.cs" />
     <Compile Include="Assets\Uniconn\Room\RoomConnector.cs" />

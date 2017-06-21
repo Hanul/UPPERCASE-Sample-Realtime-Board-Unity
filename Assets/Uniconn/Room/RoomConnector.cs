@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
+using UnityEngine;
 
 namespace Uniconn
 {
@@ -19,10 +22,15 @@ namespace Uniconn
 
         protected Connector.ConnectionFailedHandler connectionFailedHandler;
 
+        protected void Send<T>(SendInfo<T> sendInfo)
+        {
+            Send(sendInfo.methodName, sendInfo.data, sendInfo.methodHandler);
+        }
+        
         public void RegisterHandlers(Connector.ConnectionFailedHandler connectionFailedHandler, Connector.ConnectedHandler connectedHandler, Connector.DisconnectedHandler disconnectedHandler)
         {
             this.connectionFailedHandler = connectionFailedHandler;
-
+            
             connector.RegisterHandlers(connectionFailedHandler, () => {
 
                 foreach (string roomName in enterRoomNames)
@@ -30,9 +38,9 @@ namespace Uniconn
                     Send("__ENTER_ROOM", roomName);
                 }
 
-                foreach (SendInfo<object> sendInfo in waitingSendInfos)
+                foreach (object sendInfo in waitingSendInfos)
                 {
-                    Send(sendInfo.methodName, sendInfo.data, sendInfo.methodHandler);
+                    GetType().GetMethod("Send", BindingFlags.NonPublic | BindingFlags.Instance).MakeGenericMethod(new Type[] { sendInfo.GetType().GetGenericArguments()[0] }).Invoke(this, new object[] { sendInfo });
                 }
 
                 waitingSendInfos = new List<object>();
