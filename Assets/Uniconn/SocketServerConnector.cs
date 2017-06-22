@@ -121,7 +121,7 @@ namespace Uniconn
                     while ((index = receivedStr.IndexOf("\r\n")) != -1)
                     {
                         string json = receivedStr.Substring(0, index);
-
+                        
                         int methodNameIndex = json.IndexOf("\"methodName\"");
                         for (int i = 0; ; i += 1)
                         {
@@ -159,7 +159,6 @@ namespace Uniconn
 
         public void On<T>(string methodName, Connector.MethodHandler<T> methodHandler)
         {
-
             List<object> methodHandlers;
 
             if (methodHandlerMap.ContainsKey(methodName) != true)
@@ -176,7 +175,6 @@ namespace Uniconn
 
         public void Off(string methodName, object methodHandler)
         {
-
             List<object> methodHandlers = methodHandlerMap[methodName];
 
             methodHandlers.Remove(methodHandler);

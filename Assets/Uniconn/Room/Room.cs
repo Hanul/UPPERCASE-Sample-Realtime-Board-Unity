@@ -19,14 +19,18 @@ namespace Uniconn
 
         public void On<T>(string methodName, Connector.MethodHandler<T> methodHandler)
         {
-            List<object> methodHandlers = methodHandlerMap[roomName + "/" + methodName];
+            List<object> methodHandlers;
 
-            connector.On(roomName + "/" + methodName, methodHandler);
-
-            if (methodHandlerMap[roomName + "/" + methodName] == null)
+            if (methodHandlerMap.ContainsKey(roomName + "/" + methodName) != true)
             {
                 methodHandlerMap.Add(roomName + "/" + methodName, methodHandlers = new List<object>());
             }
+            else
+            {
+                methodHandlers = methodHandlerMap[roomName + "/" + methodName];
+            }
+
+            connector.On<T>(roomName + "/" + methodName, methodHandler);
 
             methodHandlers.Add(methodHandler);
         }
@@ -88,8 +92,6 @@ namespace Uniconn
                     {
                         connector.Off(fullMethodName, methodHandler);
                     }
-
-                    methodHandlerMap.Remove(fullMethodName);
                 }
 
                 // free method handler map.

@@ -72,7 +72,7 @@ namespace Uniconn
 
         public void On<T>(string methodName, Connector.MethodHandler<T> methodHandler)
         {
-            connector.On(methodName, methodHandler);
+            connector.On<T>(methodName, methodHandler);
         }
 
         public void Off(string methodName, object methodHandler)
@@ -105,7 +105,7 @@ namespace Uniconn
         public void EnterRoom(string roomName)
         {
             enterRoomNames.Add(roomName);
-            if (IsConnected() != true)
+            if (IsConnected() == true)
             {
                 Send("__ENTER_ROOM", roomName);
             }
@@ -113,7 +113,7 @@ namespace Uniconn
 
         public void ExitRoom(string roomName)
         {
-            if (IsConnected() != true)
+            if (IsConnected() == true)
             {
                 Send("__EXIT_ROOM", roomName);
             }

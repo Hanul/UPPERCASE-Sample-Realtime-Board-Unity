@@ -93,8 +93,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\ArticleData.cs" />
-    <Compile Include="Assets\ArticleDataValidErrors.cs" />
     <Compile Include="Assets\Board.cs" />
     <Compile Include="Assets\Uniconn\Connector.cs" />
     <Compile Include="Assets\Uniconn\Handler\ConnectedHandler.cs" />
