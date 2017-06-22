@@ -6,6 +6,10 @@ using UnityEngine.UI;
 
 public class Board : MonoBehaviour
 {
+    private const string HOST = "sample-realtime-board.uppercase.io";
+    private const int WEB_SERVER_PORT = 8530;
+    private const int SOCKET_SERVER_PORT = 8529;
+
     [Serializable]
     public class ArticleData
     {
@@ -251,6 +255,11 @@ public class Board : MonoBehaviour
         });
     }
 
+    public void ViewSourceCode()
+    {
+        Application.OpenURL("https://github.com/Hanul/UPPERCASE-Sample-Realtime-Board-Unity");
+    }
+
     void Start()
     {
         connector = new Connector();
@@ -264,7 +273,7 @@ public class Board : MonoBehaviour
         {
             alertMsg = "서버와의 연결이 끊어졌습니다.";
         });
-        StartCoroutine(connector.Connect("127.0.0.1", false, 8530, 8531));
+        StartCoroutine(connector.Connect(HOST, false, WEB_SERVER_PORT, SOCKET_SERVER_PORT));
 
         articleRoom = new Room(connector, "RealtimeBoard", "Article");
 
