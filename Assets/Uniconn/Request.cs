@@ -9,7 +9,7 @@ namespace Uniconn
         public delegate void ResponseListener(string responseText);
         public delegate void ErrorListener(string errorMsg);
 
-        public static IEnumerator PostData(string url, object data, ErrorListener errorListener, ResponseListener responseListener)
+        public static IEnumerator Post(string url, object data, ErrorListener errorListener, ResponseListener responseListener)
         {
             WWWForm form = new WWWForm();
             form.AddField("__DATA", JsonUtility.ToJson(data));
