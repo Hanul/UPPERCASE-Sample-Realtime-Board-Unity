@@ -24,7 +24,7 @@ namespace Uniconn
         private int sendKey = 0;
 
         private Socket socket;
-        
+
         private AsyncCallback receiveCallback;
 
         public void Disconnect()
@@ -43,7 +43,7 @@ namespace Uniconn
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
 
             bool connected;
-            
+
             try
             {
                 socket.Connect(host, port);
@@ -56,14 +56,16 @@ namespace Uniconn
 
                 connected = false;
             }
-            
+
             if (connected == true)
             {
                 connectedHandler();
 
-                Byte[] buffer = new Byte[1024];
-
-                socket.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, receiveCallback, buffer);
+                if (IsConnected() == true)
+                {
+                    Byte[] buffer = new Byte[1024];
+                    socket.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, receiveCallback, buffer);
+                }
             }
             else
             {
@@ -85,7 +87,7 @@ namespace Uniconn
             this.connectedHandler = connectedHandler;
             this.disconnectedHandler = disconnectedHandler;
         }
-        
+
         public class ReceiveData<T>
         {
             public T data;
@@ -103,7 +105,7 @@ namespace Uniconn
             receiveCallback = (IAsyncResult asyncResult) =>
             {
                 Byte[] buffer = asyncResult.AsyncState as Byte[];
-                
+
                 int receivedBytes = socket.EndReceive(asyncResult);
 
                 if (receivedBytes > 0)
@@ -121,7 +123,7 @@ namespace Uniconn
                     while ((index = receivedStr.IndexOf("\r\n")) != -1)
                     {
                         string json = receivedStr.Substring(0, index);
-                        
+
                         int methodNameIndex = json.IndexOf("\"methodName\"");
                         for (int i = 0; ; i += 1)
                         {
@@ -231,7 +233,7 @@ namespace Uniconn
             }
 
             sendKey += 1;
-            
+
             socket.BeginSend(buffer, 0, buffer.Length, SocketFlags.None, (IAsyncResult asyncResult) =>
             {
                 socket.EndSend(asyncResult);
